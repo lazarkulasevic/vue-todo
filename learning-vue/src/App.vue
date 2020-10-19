@@ -1,77 +1,96 @@
 <template>
   <div id="app">
-    <Header />
-    <AddTodo v-on:add-todo="addTodo" />
-    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+    <Header v-on:add-user="addUser" />
+    <div class="todo-wrapper">
+      <div class="todo-app">
+        <AddTodo v-on:add-todo="addTodo" />
+        <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Header from './layout/Header';
-import AddTodo from './components/AddTodo';
-import Todos from './components/Todos';
+import Header from "./layout/Header";
+import AddTodo from "./components/AddTodo";
+import Todos from "./components/Todos";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     AddTodo,
-    Todos
+    Todos,
   },
   data() {
     return {
       todos: [
         {
           id: 1,
-          title: 'Todo One',
-          completed: false
+          title: "Todo One",
+          completed: false,
         },
         {
           id: 2,
-          title: 'Todo Two',
-          completed: false
+          title: "Todo Two",
+          completed: false,
         },
         {
           id: 3,
-          title: 'Todo Three',
-          completed: false
-        }
-      ]
-    }
+          title: "Todo Three",
+          completed: false,
+        },
+      ],
+    };
   },
   methods: {
     deleteTodo(id) {
-      this.todos = this.todos.filter(todo => todo.id !== id);
+      this.todos = this.todos.filter((todo) => todo.id !== id);
     },
     addTodo(newTodo) {
       this.todos = [...this.todos, newTodo];
-    }
-  }
-}
+    },
+    addUser(newUser) {
+      console.log(newUser);
+    },
+  },
+};
 </script>
 
 <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.4;
-  }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+}
 
-  .btn {
-    display: inline-block;
-    border: none;
-    background: #555;
-    color: #fff;
-    padding: 7px 20px;
-    cursor: pointer;
-  }
+.btn {
+  display: inline-block;
+  border: none;
+  background: #555;
+  color: #fff;
+  padding: 7px 20px;
+  cursor: pointer;
+}
 
-  .btn:hover {
-    background: #666;
-  }
+.btn:hover {
+  background: #666;
+}
+</style>
+
+<style scoped>
+.todo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.todo-app {
+  width: 40%;
+}
 </style>
