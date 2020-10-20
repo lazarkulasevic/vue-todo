@@ -14,6 +14,7 @@
 import Header from "./layout/Header";
 import AddTodo from "./components/AddTodo";
 import Todos from "./components/Todos";
+import { db } from "../firestore";
 
 export default {
   name: "App",
@@ -24,23 +25,24 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: 1,
-          title: "Todo One",
-          completed: false,
-        },
-        {
-          id: 2,
-          title: "Todo Two",
-          completed: false,
-        },
-        {
-          id: 3,
-          title: "Todo Three",
-          completed: false,
-        },
-      ],
+      // todos: [
+      //   {
+      //     id: 1,
+      //     title: "Todo One",
+      //     completed: false,
+      //   },
+      //   {
+      //     id: 2,
+      //     title: "Todo Two",
+      //     completed: false,
+      //   },
+      //   {
+      //     id: 3,
+      //     title: "Todo Three",
+      //     completed: false,
+      //   },
+      // ],
+      todos: [],
     };
   },
   methods: {
@@ -49,6 +51,21 @@ export default {
     },
     addTodo(newTodo) {
       this.todos = [...this.todos, newTodo];
+    },
+    created() {
+      // will be finished when I learn basics of VueJS
+      db.collection("todos")
+        .get()
+        .then(function (snapshot) {
+          snapshot.docs.forEach(function (doc) {
+            const data = {
+              id: doc.id,
+              title: doc.data().title,
+              completed: doc.data().completed,
+            };
+            this.todos.push(data);
+          });
+        });
     },
     addUser(newUser) {
       console.log(newUser);
