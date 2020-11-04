@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Header v-on:add-user="addUser" />
+    <Header />
     <div class="todo-wrapper">
       <div class="todo-app">
-        <AddTodo v-on:add-todo="addTodo" />
-        <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+        <AddTodo @add-todo="addTodo" />
+        <Todos :todos="todos" @del-todo="deleteTodo" />
       </div>
     </div>
   </div>
@@ -14,7 +14,6 @@
 import Header from "./layout/Header";
 import AddTodo from "./components/AddTodo";
 import Todos from "./components/Todos";
-import { db } from "../firestore";
 
 export default {
   name: "App",
@@ -25,24 +24,26 @@ export default {
   },
   data() {
     return {
-      // todos: [
-      //   {
-      //     id: 1,
-      //     title: "Todo One",
-      //     completed: false,
-      //   },
-      //   {
-      //     id: 2,
-      //     title: "Todo Two",
-      //     completed: false,
-      //   },
-      //   {
-      //     id: 3,
-      //     title: "Todo Three",
-      //     completed: false,
-      //   },
-      // ],
-      todos: [],
+      todos: [
+        {
+          id: 1,
+          title: "Todo One",
+          completed: false,
+          editing: false,
+        },
+        {
+          id: 2,
+          title: "Todo Two",
+          completed: false,
+          editing: false,
+        },
+        {
+          id: 3,
+          title: "Todo Three",
+          completed: false,
+          editing: false,
+        },
+      ],
     };
   },
   methods: {
@@ -52,25 +53,24 @@ export default {
     addTodo(newTodo) {
       this.todos = [...this.todos, newTodo];
     },
-    created() {
-      // will be finished when I learn basics of VueJS
-      db.collection("todos")
-        .get()
-        .then(function (snapshot) {
-          snapshot.docs.forEach(function (doc) {
-            const data = {
-              id: doc.id,
-              title: doc.data().title,
-              completed: doc.data().completed,
-            };
-            this.todos.push(data);
-          });
-        });
-    },
-    addUser(newUser) {
-      console.log(newUser);
-    },
   },
+
+  // mounted: function () {
+  //   // will be finished when I learn basics of VueJS
+  //   db.collection("todos")
+  //     .get()
+  //     .then(function (snapshot) {
+  //       snapshot.docs.forEach(function (doc) {
+  //         const data = {
+  //           id: doc.id,
+  //           title: doc.data().title,
+  //           completed: doc.data().completed,
+  //           editing: false,
+  //         };
+  //         this.todos.push(data);
+  //       });
+  //     });
+  // },
 };
 </script>
 
@@ -79,11 +79,21 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: none;
+}
+
+a:hover,
+button:hover,
+input[type="checkbox"]:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  cursor: pointer;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
+  background-color: #444;
 }
 
 .btn {
@@ -92,7 +102,6 @@ body {
   background: #555;
   color: #fff;
   padding: 7px 20px;
-  cursor: pointer;
 }
 
 .btn:hover {
@@ -108,6 +117,6 @@ body {
 }
 
 .todo-app {
-  width: 40%;
+  width: 60%;
 }
 </style>
