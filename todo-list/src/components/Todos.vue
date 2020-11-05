@@ -1,9 +1,15 @@
 <template>
   <div>
     <div class="component">
-      <div :key="todo.id" v-for="todo in todosFiltered">
-        <TodoItem :todo="todo" @del-todo="$emit('del-todo', todo.id)" />
-      </div>
+      <transition-group
+        name="fade"
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutDown"
+      >
+        <div :key="todo.id" v-for="todo in todosFiltered" class="todo-item">
+          <TodoItem :todo="todo" @del-todo="$emit('del-todo', todo.id)" />
+        </div>
+      </transition-group>
     </div>
     <div class="container">
       <input type="checkbox" @change="checkAll" :checked="anyRemaining" />
@@ -95,6 +101,12 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
+
+.todo-item {
+  animation-duration: 0.3s;
+}
+
 .component {
   margin: 10px 0;
 }
