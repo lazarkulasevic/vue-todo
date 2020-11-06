@@ -35,7 +35,6 @@ export default {
       requited: true,
     },
   },
-
   data() {
     return {
       id: this.todo.id,
@@ -109,6 +108,7 @@ input[name="todo-item"] {
 
 .is-complete {
   text-decoration: line-through;
+  color: #747474;
 }
 
 .del {

@@ -62,13 +62,11 @@ export default {
   },
   methods: {
     checkAll(event) {
-      this.todos.forEach((todo) => {
-        if (event.target.checked) {
-          todo.completed = true;
-        } else {
-          todo.completed = false;
-        }
-      });
+      this.todos.forEach((todo) =>
+        event.target.checked
+          ? (todo.completed = true)
+          : (todo.completed = false)
+      );
     },
     clearDone() {
       this.todos = this.todos.filter((todo) => !todo.completed);
