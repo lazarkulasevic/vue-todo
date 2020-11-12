@@ -25,28 +25,21 @@
 <script>
 export default {
   name: "TodoItem",
-  props: {
-    todo: {
-      type: Object,
-      required: true,
-    },
-    index: {
-      type: Number,
-      requited: true,
-    },
-  },
+  props: ["todo"],
   data() {
     return {
       id: this.todo.id,
       title: this.todo.title,
       editing: this.todo.editing,
       beforeEditCache: "",
-      completed: false,
     };
   },
   methods: {
     markComplete() {
-      this.todo.completed = !this.todo.completed;
+      this.$store.commit(
+        "markComplete",
+        (this.todo.completed = !this.todo.completed)
+      );
     },
     editTodo() {
       this.beforeEditCache = this.title;

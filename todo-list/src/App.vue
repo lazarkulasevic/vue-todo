@@ -48,10 +48,10 @@ export default {
   },
   methods: {
     deleteTodo(id) {
-      this.todos = this.todos.filter((todo) => todo.id !== id);
+      this.$store.commit("deleteTodo", id);
     },
     addTodo(newTodo) {
-      this.todos = [...this.todos, newTodo];
+      this.$store.state.todos = [...this.$store.state.todos, newTodo];
     },
   },
 
@@ -67,7 +67,7 @@ export default {
   //           completed: doc.data().completed,
   //           editing: false,
   //         };
-  //         this.todos.push(data);
+  //         this.$store.state.todos.push(data);
   //       });
   //     });
   // },

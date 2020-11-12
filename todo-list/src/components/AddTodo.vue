@@ -28,13 +28,13 @@ export default {
       event.preventDefault();
 
       if (this.title.trim().length == 0) return;
-      const newTodo = {
+
+      this.$store.commit("addTodo", {
         id: uuid.v4(),
         title: this.title,
         completed: false,
         editing: false,
-      };
-      this.$emit("add-todo", newTodo);
+      });
 
       this.title = "";
     },

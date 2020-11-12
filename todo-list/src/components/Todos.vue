@@ -37,7 +37,7 @@
               v-if="showClearDone"
               @click="clearDone"
             >
-              Clear Completed
+              Clear Done
             </button>
           </transition>
         </div>
@@ -62,37 +62,24 @@ export default {
   },
   methods: {
     checkAll(event) {
-      this.todos.forEach((todo) =>
-        event.target.checked
-          ? (todo.completed = true)
-          : (todo.completed = false)
-      );
+      this.$store.commit("checkAll", event);
     },
     clearDone() {
-      this.todos = this.todos.filter((todo) => !todo.completed);
+      this.$store.commit("clearDone", true);
     },
   },
   computed: {
     remaining() {
-      return this.todos.filter((todo) => !todo.completed).length;
+      return this.$store.getters.remaining;
     },
     anyRemaining() {
-      return this.remaining === 0;
+      return this.$store.getters.anyRemaining;
     },
     todosFiltered() {
-      switch (this.filter) {
-        case "all":
-          return this.todos;
-        case "active":
-          return this.todos.filter((todo) => !todo.completed);
-        case "done":
-          return this.todos.filter((todo) => todo.completed);
-        default:
-          return this.todos;
-      }
+      return this.$store.getters.todosFiltered;
     },
     showClearDone() {
-      return this.todos.filter((todo) => todo.completed).length > 0;
+      return this.$store.getters.showClearDone;
     },
   },
 };
