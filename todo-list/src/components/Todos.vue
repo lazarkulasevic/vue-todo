@@ -18,16 +18,22 @@
     </div>
     <div class="container">
       <div>
-        <button :class="{ active: filter === 'all' }" @click="filter = 'all'">
+        <button
+          :class="{ active: filter === 'all' }"
+          @click="updateFilter('all')"
+        >
           All
         </button>
         <button
           :class="{ active: filter === 'active' }"
-          @click="filter = 'active'"
+          @click="updateFilter('active')"
         >
           Active
         </button>
-        <button :class="{ active: filter === 'done' }" @click="filter = 'done'">
+        <button
+          :class="{ active: filter === 'done' }"
+          @click="updateFilter('done')"
+        >
           Done
         </button>
         <div class="items-left">
@@ -66,6 +72,9 @@ export default {
     },
     clearDone() {
       this.$store.commit("clearDone", true);
+    },
+    updateFilter(filter) {
+      this.$store.state.filter = filter;
     },
   },
   computed: {
